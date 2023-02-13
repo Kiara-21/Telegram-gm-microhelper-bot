@@ -113,7 +113,7 @@ dispatcher.add_handler(telegram.ext.CommandHandler('start', start))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD4', rollD4))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD6', rollD6))
-dispatcher.add_handler(telegram.ext.CommandHandler('rollD6', rollD8))
+dispatcher.add_handler(telegram.ext.CommandHandler('rollD8', rollD8))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD10', rollD10))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollCoin', rollCoin))
 
