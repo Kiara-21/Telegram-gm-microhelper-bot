@@ -23,17 +23,48 @@ events = ['Раптово відкрився портал у варп і з нь
           'Відкрився портал у варп і з нього вилетіли демони! Непощастило так непощастило.',
           'Біля вас відкрився портал в варп і з нього вийшов хаоситський титан класу "Гончак". КАПІТАЛЬНО непощастило.']
 
-enemiesOrks = ['1 мекбойз', '1 варбосс', '2 бойзи з чоппами', '3 бойзи з вогнеметами', '3 гретчини', 'банка-убивця', '2 вибухових сквіга']
-enemiesTyranids = ['1 тиран вулика', '2 ліктори', '1 зоантроп', '3 гаунти', '2 пожирачі']
-enemiesChaos = ['2 жахи Тзінча', '3 гончака Кхорна', '2 демонетки Слаанеш', '5 нурглінгів']
+enemiesOrks0 = ['1 мекбойз', '1 варбосс', 'банка-убивця', '1 горканавт', '1 вартракк']
+enemiesOrks1 = ['2 бойзи з чоппами', '3 бойзи з вогнеметами', '3 гретчини', '2 вибухових сквіга', '5 снотлінгів']
 
-lootOrks = ['Купа непотрібного металобрухту', '1 чоппа. Можна вдарити когось', '1 дакка. Стріляє лише в орочіх руках']
-lootTyranids = ['1 клешня. Достатньо гостра.', '2 шматки тиранідського м*яса. Краще не їсти', '1 півметровий кіготь. Якщо ви загубили свій ніж - саме те']
-lootChaos = ['1 дивна книга на замку. Якимось чином не дематеріалізувалась', '1 невеликий камінець. Переливається всіма кольорами райдуги', 'Калюжа сірої жижи. Смердить огидно.']
-lootImperium = ['2 крак-гранати', '2 фраг-гранати', '1 лазган', '1 ніж', '2 повних магазини набоїв для болтера', 'Купа металобрухту', '1 стаббер']
+enemiesTyranids0 = ['1 тиран вулика', '1 зоантроп', '1 гарпія', '1 маліцептор']
+enemiesTyranids1 = ['2 ліктори', '3 гаунти', '2 пожирачі']
+
+enemiesChaos0 = ['1 Кровожер', '1 Великий Нечистий', 'Пекельний дракон', '3 психноєни', '1 Осквернювач']
+enemiesChaos1 = ['2 жахи Тзінча', '3 гончака Кхорна', '2 демонетки Слаанеш', '5 нурглінгів']
+
+
+lootOrks = ['Купа непотрібного металобрухту',
+            '1 чоппа. Можна вдарити когось',
+            '1 дакка. Стріляє лише в орочіх руках',
+            'Ороче м*ясо. Якщо вам більше нічого їсти...']
+lootTyranids = ['1 клешня. Достатньо гостра.',
+                '2 шматки тиранідського м*яса. Краще не їсти',
+                '1 півметровий кіготь. Якщо ви загубили свій ніж - саме те',
+                'Калюжа кислотної крові. Достатньо щоб розплавити щось або когось.',
+                'Вцілілий шматок панцира. Може витримати ще кілька попадань з болтера.']
+lootChaos = ['1 дивна книга на замку. Якимось чином не дематеріалізувалась',
+             '1 невеликий камінець. Переливається всіма кольорами райдуги',
+             'Калюжа сірої жижи. Смердить огидно.',
+             'Хмара синього туману. Близько підходити не рекомендується',
+             '1 короткий меч зі склоподібної аморфної речовини. Використовувати на свій страх і ризик.']
+lootImperium = ['2 крак-гранати',
+                '2 фраг-гранати',
+                '1 лазган',
+                '1 ніж',
+                '2 повних магазини набоїв для болтера',
+                'Купа металобрухту',
+                '1 стаббер',
+                '1 мельта-бомба',
+                '1 плазмовий пістолет',
+                '3 повних магазини набоїв для стаббера',
+                '1 болт-пістолет',]
 
 def start(update, context):
     update.message.reply_text("Ваш мікропомічник у веденні ваховських кампаній.")
+
+def rollD3(update, context):
+    txmsg = randint(1, 3)
+    context.bot.sendMessage(chat_id='-858506491', text=txmsg)
 
 def rollD4(update, context):
     txmsg = randint(1, 4)
@@ -51,6 +82,10 @@ def rollD10(update, context):
     txmsg = randint(1, 10)
     context.bot.sendMessage(chat_id='-858506491', text=txmsg)
 
+def rollD20(update, context):
+    txmsg = randint(1, 20)
+    context.bot.sendMessage(chat_id='-858506491', text=txmsg)
+
 def rollCoin(update, context):
     x = randint(0, 1)
     if x == 0:
@@ -65,12 +100,20 @@ def startEvents(update, context):
     if x == 0:
         context.bot.sendPhoto(chat_id='-858506491', caption=events[0], photo='https://warhammergames.ru/_pu/0/50128183.jpg')
         context.bot.sendMessage(chat_id='-858506491', text="Вороги:")
-        tmsg = random.choice(enemiesOrks) + ", " + random.choice(enemiesOrks) + ", " + random.choice(enemiesOrks)
-        context.bot.sendMessage(chat_id='-858506491', text=tmsg)
+        a = random.choice(enemiesOrks1)
+        b = random.choice(enemiesOrks1)
+        if a == b:
+            while a == b:
+                b = random.choice(enemiesOrks1)
+            tmsg = random.choice(enemiesOrks0) + ", " + a + ", " + b
+            context.bot.sendMessage(chat_id='-858506491', text=tmsg)
+        else:
+            tmsg = random.choice(enemiesOrks0) + ", " + a + ", " + b
+            context.bot.sendMessage(chat_id='-858506491', text=tmsg)
     elif x == 1:
         context.bot.sendPhoto(chat_id='-858506491', caption=events[1], photo='https://qph.cf2.quoracdn.net/main-qimg-f4c9f3f2fa0860fdc271fd07a4bb41f8-pjlq')
         context.bot.sendMessage(chat_id='-858506491', text="Вороги:")
-        tmsg = random.choice(enemiesTyranids) + ", " + random.choice(enemiesTyranids)
+        tmsg = random.choice(enemiesTyranids0) + ", " + random.choice(enemiesTyranids1)
         context.bot.sendMessage(chat_id='-858506491', text=tmsg)
     elif x == 2:
         context.bot.sendPhoto(chat_id='-858506491', caption=events[2], photo='https://static.wikia.nocookie.net/warhammer40k/images/3/36/Waves_of_the_Warp.jpg/revision/latest?cb=20190609035307&path-prefix=ru')
@@ -85,7 +128,7 @@ def startEvents(update, context):
     elif x == 4:
         context.bot.sendPhoto(chat_id='-858506491', caption=events[4], photo='https://www.belloflostsouls.net/wp-content/uploads/2018/01/60030115006_CodexChaosDaemonsENG02-e1524631810460.jpg')
         context.bot.sendMessage(chat_id='-858506491', text="Вороги:")
-        tmsg = random.choice(enemiesChaos) + ", " + random.choice(enemiesChaos)
+        tmsg = random.choice(enemiesChaos0) + ", " + random.choice(enemiesChaos1)
         context.bot.sendMessage(chat_id='-858506491', text=tmsg)
     elif x == 5:
         context.bot.sendPhoto(chat_id='-858506491', caption=events[5], photo='https://64.media.tumblr.com/648f5486db45399e2d7a7ed06bdc1ca7/tumblr_pan8rlxXsq1uym32uo1_640.jpg')
@@ -111,10 +154,12 @@ def lootboxImperium(update, context):
 
 dispatcher.add_handler(telegram.ext.CommandHandler('start', start))
 
+dispatcher.add_handler(telegram.ext.CommandHandler('rollD3', rollD3))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD4', rollD4))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD6', rollD6))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD8', rollD8))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollD10', rollD10))
+dispatcher.add_handler(telegram.ext.CommandHandler('rollD20', rollD20))
 dispatcher.add_handler(telegram.ext.CommandHandler('rollCoin', rollCoin))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('startEvents', startEvents))
